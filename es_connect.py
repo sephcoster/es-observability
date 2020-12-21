@@ -38,16 +38,17 @@ def main():
     logger = setup_logging('complaint')
     
     cluster_info = pretty_json( es.info() )
-    logger.info('Cluster Information: {}'.format(cluster_info) )
+    logger.info('Cluster Information: \n {}'.format(cluster_info) )
     
     cluster_health = pretty_json( es.cluster.health() )
-    logger.info('Cluster Health: {}'.format(cluster_health) )
+    logger.info('Cluster Health: \n {}'.format(cluster_health) )
     
     cluster_indices = pretty_json( es.cat.indices() )
-    logger.info('Cluster Indices Available: {}'.format(cluster_indices) )
+    logger.info('Cluster Indices Available: \n {}'.format(cluster_indices) )
     
-    logger.info('Index value: ')
-    logger.info(index_name)
+    logger.info('Index value: {}'.format(index_name))
+
+    logger.info('Information about this index: \n {}'.format())
 
     if query:
         search = {}
@@ -56,9 +57,9 @@ def main():
                 "query": query
             }
         }
-    
-    search_results = pretty_json(es.search(body=search, index=index_name))
-    logger.info('Example Search: {}'.format( search_results) )
+        
+        search_results = pretty_json(es.search(body=search, index=index_name))
+        logger.info('Example Search: {}'.format( search_results) )
 
 if __name__ == '__main__':
     main()  
