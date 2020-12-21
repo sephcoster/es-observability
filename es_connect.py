@@ -43,14 +43,14 @@ def main():
     cluster_health = pretty_json( es.cluster.health() )
     logger.info('Cluster Health: \n {}'.format(cluster_health) )
     
-    cluster_indices = pretty_json( es.cat.indices() )
+    cluster_indices = es.cat.indices()
     logger.info('Cluster Indices Available: \n {}'.format(cluster_indices) )
     
     logger.info('Index value: {}'.format(index_name))
 
 
     if index_name:
-        index_info = pretty_json( es.get(index=index_name) )
+        index_info = pretty_json( es.indices.get(index_name) )
         logger.info('Information about this index: \n {}'.format(index_info))
 
     if query:
