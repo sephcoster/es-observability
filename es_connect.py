@@ -31,12 +31,14 @@ es.
 def main():
 	es = get_aws_es_connection()
 	logger = setup_logging('complaint')
-	logger.info('Index Information: ')
+	logger.info('Cluster Information: ')
 	es.info()
 	logger.info('Cluster Health: ')
 	es.cluster.health()
 	logger.info('Cluster Indices Available: ')
 	es.cat.indices()
+	logger.info('Index value: ')
+	logger.info(index_name)
 
 if __name__ == '__main__':
     main()	
