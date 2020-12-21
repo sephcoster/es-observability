@@ -48,7 +48,10 @@ def main():
     
     logger.info('Index value: {}'.format(index_name))
 
-    logger.info('Information about this index: \n {}'.format())
+
+    if index_name:
+        index_info = pretty_json( es.get(index_name) )
+        logger.info('Information about this index: \n {}'.format(index_info))
 
     if query:
         search = {}
