@@ -25,20 +25,21 @@ def get_aws_es_connection():
 
     return es
 
-es = get_aws_es_connection()
-index_name = os.environ.get('ES_INDEX_NAME')
-
-es.
-
 def main():
+    index_name = os.environ.get('ES_INDEX_NAME')
     es = get_aws_es_connection()
+
     logger = setup_logging('complaint')
+    
     logger.info('Cluster Information: ')
     es.info()
+    
     logger.info('Cluster Health: ')
     es.cluster.health()
+    
     logger.info('Cluster Indices Available: ')
     es.cat.indices()
+    
     logger.info('Index value: ')
     logger.info(index_name)
 
