@@ -45,12 +45,13 @@ def main():
     
     cluster_indices = es.cat.indices()
     logger.info('Cluster Indices Available: \n {}'.format(cluster_indices) )
-    
-    logger.info('Index value: {}'.format(index_name))
 
 
     if index_name:
-        index_info = pretty_json( es.indices.get(index_name) )
+        logger.info('Index value: {}'.format(index_name))
+        index_count = es.search.count(body=None, index=index_name)
+        logger.info('Record Count: {}'.format(index_count))
+        index_info = pretty_json( es.indices.get(index_name))
         logger.info('Information about this index: \n {}'.format(index_info))
 
     if query:
