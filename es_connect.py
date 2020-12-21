@@ -31,14 +31,14 @@ def main():
 
     logger = setup_logging('complaint')
     
-    logger.info('Cluster Information: ')
-    es.info()
+    cluster_info = es.info()
+    logger.info('Cluster Information: {}'.format(cluster_info) )
     
-    logger.info('Cluster Health: ')
-    es.cluster.health()
+    cluster_health = es.cluster.health()
+    logger.info('Cluster Health: {}'.format(cluster_health) )
     
-    logger.info('Cluster Indices Available: ')
-    es.cat.indices()
+    cluster_indices = es.cat.indices()
+    logger.info('Cluster Indices Available: {}'.format(cluster_indices) )
     
     logger.info('Index value: ')
     logger.info(index_name)
