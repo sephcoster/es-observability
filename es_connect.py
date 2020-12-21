@@ -31,6 +31,7 @@ def pretty_json(thing):
 
 def main():
     index_name = os.environ.get('ES_INDEX_NAME')
+    index_alias = os.environ.get('ES_ALIAS')
     query = os.environ.get('ES_QUERY_STRING')
 
     es = get_aws_es_connection()
@@ -46,6 +47,12 @@ def main():
     cluster_indices = es.cat.indices()
     logger.info('Cluster Indices Available: \n {}'.format(cluster_indices) )
 
+    if index_alias:
+        logger.info('Index Alias value: {}'.format(index_alias))
+        index_count = es.count(body=None, index=index_alias)
+        logger.info('Record Count: {}'.format(index_count))
+        index_info = pretty_json( es.indices.get(index_alias))
+        logger.info('Information about this index alias: \n {}'.format(index_info))
 
     if index_name:
         logger.info('Index value: {}'.format(index_name))
