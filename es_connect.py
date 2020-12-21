@@ -1,3 +1,4 @@
+import json
 import os
 
 from log import setup_logging
@@ -25,23 +26,39 @@ def get_aws_es_connection():
 
     return es
 
+def pretty_json(thing):
+    return json.dumps(thing, indent=2)
+
 def main():
     index_name = os.environ.get('ES_INDEX_NAME')
+    query = os.environ.get('ES_QUERY_STRING')
+
     es = get_aws_es_connection()
 
     logger = setup_logging('complaint')
     
-    cluster_info = es.info()
+    cluster_info = pretty_json( es.info() )
     logger.info('Cluster Information: {}'.format(cluster_info) )
     
-    cluster_health = es.cluster.health()
+    cluster_health = pretty_json( es.cluster.health() )
     logger.info('Cluster Health: {}'.format(cluster_health) )
     
-    cluster_indices = es.cat.indices()
+    cluster_indices = pretty_json( es.cat.indices() )
     logger.info('Cluster Indices Available: {}'.format(cluster_indices) )
     
     logger.info('Index value: ')
     logger.info(index_name)
+
+    if query:
+        search = {}
+        search["query"] = {
+            "query_string": {
+                "query": query
+            }
+        }
+    
+    search_results = pretty_json(es.search(body=search, index=index_name))
+    logger.info('Example Search: {}'.format( search_results) )
 
 if __name__ == '__main__':
     main()  
